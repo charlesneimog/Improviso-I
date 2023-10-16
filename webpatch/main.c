@@ -20,10 +20,20 @@
 #include <z_libpd.h>             /* libpd */
 
 // Externals Objects Declarations
+void loadbanger_setup(void);
+void router_setup(void);
+void earplug_tilde_setup(void);
+void atodb_setup(void);
+void peakamp_tilde_setup(void);
+void plaits_tilde_setup(void);
+void args_setup(void);
+void gate_setup(void);
+void envgen_tilde_setup(void);
+void vu_tilde_setup(void);
+void setup_giga0x2erev_tilde(void);
 void spread_setup(void);
 void round_setup(void);
 void loop_setup(void);
-void plaits_tilde_setup(void);
 
 // ====================
 
@@ -301,10 +311,20 @@ void AudioWorkletProcessorCreated(EMSCRIPTEN_WEBAUDIO_T audioContext,
     libpd_init();
 
     // WebPd Load Externals
+    loadbanger_setup();
+    router_setup();
+    earplug_tilde_setup();
+    atodb_setup();
+    peakamp_tilde_setup();
+    plaits_tilde_setup();
+    args_setup();
+    gate_setup();
+    envgen_tilde_setup();
+    vu_tilde_setup();
+    setup_giga0x2erev_tilde();
     spread_setup();
     round_setup();
     loop_setup();
-    plaits_tilde_setup();
 
     // ====================
 
