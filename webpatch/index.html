@@ -154,7 +154,7 @@
                 <br />
                 <input
                     type="range"
-                    min="-60"
+                    min="-20"
                     max="10"
                     value="-10"
                     class="slider"
@@ -237,7 +237,7 @@
                 <div
                     id="delayTimeGest3"
                     style="
-                        width: 95%;
+                        width: 90%;
                         border-radius: 5px;
                         height: 10px;
                         margin-left: 10px;
@@ -363,17 +363,17 @@
                         img.style.border = '4px solid red'
                         img.src = './figs/' + process3 + '.png'
                     }
+                }
 
-                    if (totalDuration) {
-                        var totalDurationValue = totalDuration.value
-                        if (totalDurationValue != previousTotalDuration) {
-                            previousTotalDuration = totalDurationValue
-                            const img = document.getElementById('duracaoTotal')
-                            updateMeasureBarProgress(
-                                parseInt(totalDurationValue),
-                                'duracaoTotal'
-                            )
-                        }
+                if (totalDuration) {
+                    var totalDurationValue = totalDuration.value
+                    if (totalDurationValue != previousTotalDuration) {
+                        previousTotalDuration = totalDurationValue
+                        const img = document.getElementById('duracaoTotal')
+                        updateMeasureBarProgress(
+                            parseInt(totalDurationValue),
+                            'duracaoTotal'
+                        )
                     }
                 }
             }
