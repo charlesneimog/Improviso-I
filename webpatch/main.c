@@ -22,10 +22,8 @@
 // Externals Objects Declarations
 void loadbanger_setup(void);
 void lb_setup(void);
+void bowedbar_tilde_setup(void);
 void marimba_tilde_setup(void);
-void atodb_setup(void);
-void peakamp_tilde_setup(void);
-void plaits_tilde_setup(void);
 void gate_setup(void);
 void envgen_tilde_setup(void);
 void rint_setup(void);
@@ -35,8 +33,9 @@ void floor_setup(void);
 void args_setup(void);
 void router_setup(void);
 void loop_setup(void);
-void blocksize_tilde_setup(void);
 void message_setup(void);
+void blocksize_tilde_setup(void);
+void vu_tilde_setup(void);
 void prepend_setup(void);
 void earplug_tilde_setup(void);
 void grainer_tilde_setup(void);
@@ -55,8 +54,8 @@ int samplerate = 48000;
 // ================ GUI ================
 pthread_mutex_t WriteReadMutex = PTHREAD_MUTEX_INITIALIZER;
 
-char* HTML_IDS[] = {"ui_process1note", "ui_process1noteDelay", "ui_process2note", "ui_process2noteDelay", "ui_process3noteDelay", "ui_process3note"};
-int HTML_IDS_SIZE = 6;
+char* HTML_IDS[] = {"ui_process1note", "ui_process1noteDelay", "ui_process2note", "ui_process2noteDelay", "ui_process3noteDelay", "ui_process3note", "ui_duracaototal"};
+int HTML_IDS_SIZE = 7;
 
 typedef struct pdItem {
   const char *receiverID;
@@ -321,10 +320,8 @@ void AudioWorkletProcessorCreated(EMSCRIPTEN_WEBAUDIO_T audioContext,
   // WebPd Load Externals
     loadbanger_setup();
     lb_setup();
+    bowedbar_tilde_setup();
     marimba_tilde_setup();
-    atodb_setup();
-    peakamp_tilde_setup();
-    plaits_tilde_setup();
     gate_setup();
     envgen_tilde_setup();
     rint_setup();
@@ -334,8 +331,9 @@ void AudioWorkletProcessorCreated(EMSCRIPTEN_WEBAUDIO_T audioContext,
     args_setup();
     router_setup();
     loop_setup();
-    blocksize_tilde_setup();
     message_setup();
+    blocksize_tilde_setup();
+    vu_tilde_setup();
     prepend_setup();
     earplug_tilde_setup();
     grainer_tilde_setup();

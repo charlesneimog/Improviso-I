@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en-us">
+<html lang="en-US">
     <head>
         <link
             preload
@@ -97,7 +97,6 @@
         </script>
 
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Piece</title>
     </head>
     <body>
         <div id="scriptContainer"></div>
@@ -142,12 +141,26 @@
             <div class="flex-item">
                 <select
                     id="Instrument-Select"
-                    style="text-align: center; font-size: 20px"
+                    style="
+                        text-align: center;
+                        font-size: 30px;
+                        border-radius: 5px;
+                    "
                     onchange="changeInstrument()"
                 >
                     <option value="Violino">Violino</option>
                     <option value="Guitar">Violão</option>
                 </select>
+                <br />
+                <input
+                    type="range"
+                    min="-60"
+                    max="10"
+                    value="-10"
+                    class="slider"
+                    id="followerGain"
+                    onchange="changeVolume()"
+                />
             </div>
             <br />
             <div class="flex-item">
@@ -161,7 +174,6 @@
         <hr
             style="width: 75%; margin-left: 10%; margin-right: 10%; color: grey"
         />
-        <!-- NEW div with 3 figures side by side -->
         <br />
         <div style="display: flex">
             <div>
@@ -170,12 +182,16 @@
                     id="process1note"
                     src="./figs/c4.png"
                     alt="Piece Logo"
-                    style="width: 95%; margin-left: 10px"
+                    style="
+                        width: 90%;
+                        margin-left: 10px;
+                        border: 4px solid white;
+                    "
                 />
                 <div
                     id="delayTimeGest1"
                     style="
-                        width: 95%;
+                        width: 90%;
                         border-radius: 5px;
                         height: 10px;
                         margin-left: 10px;
@@ -189,12 +205,16 @@
                     id="process2note"
                     src="./figs/gs4.png"
                     alt="Piece Logo"
-                    style="width: 95%; margin-left: 10px"
+                    style="
+                        width: 90%;
+                        margin-left: 10px;
+                        border: 4px solid white;
+                    "
                 />
                 <div
                     id="delayTimeGest2"
                     style="
-                        width: 95%;
+                        width: 90%;
                         border-radius: 5px;
                         height: 10px;
                         margin-left: 10px;
@@ -208,7 +228,11 @@
                     id="process3note"
                     src="./figs/c5.png"
                     alt="Piece Logo"
-                    style="width: 95%; margin-left: 10px"
+                    style="
+                        width: 90%;
+                        margin-left: 10px;
+                        border: 4px solid white;
+                    "
                 />
                 <div
                     id="delayTimeGest3"
@@ -222,6 +246,19 @@
                 ></div>
             </div>
         </div>
+        <div
+            id="duracaoTotal"
+            style="
+                width: (calc(100% - 20px));
+                margin-top: 40px;
+                border-radius: 5px;
+                height: 20px;
+                margin-right: 10px;
+                margin-left: 10px;
+                background-color: black;
+            "
+        ></div>
+
         <script>
             var noteNumber = 0
             var noteSymbol = ''
@@ -234,6 +271,11 @@
                 sendString('pieceInstrument', value)
             }
 
+            function changeVolume() {
+                const value = document.getElementById('followerGain').value
+                sendFloat('followerGain', parseFloat(value))
+            }
+
             function updateMeasureBarProgress(duration, id) {
                 var start = new Date().getTime()
                 var interval = setInterval(function () {
@@ -242,20 +284,22 @@
                     var div = document.getElementById(id)
                     var div_width = Math.min((progress / duration) * 100, 100)
                     measureDivWidth = div_width
-                    div.style.width = div_width * 0.95 + '%'
-                    if (div_width > 94.9) {
+                    div.style.width = div_width * 0.9 + '%'
+                    if (div_width > 89.9) {
                         clearInterval(interval)
-                        div.style.width = 95 + '%'
+                        div.style.width = 90 + '%'
                     }
                 }, 15)
             }
             var previous1Detect = 0
             var previous2Detect = 0
             var previous3Detect = 0
+            var previousTotalDuration = 0
             function updateProcessNote() {
                 const process1note = document.getElementById('ui_process1note')
                 const process2note = document.getElementById('ui_process2note')
                 const process3note = document.getElementById('ui_process3note')
+                const totalDuration = document.getElementById('ui_duracaototal')
                 if (process1note) {
                     var process1 = process1note.value
                     if (process1 != previous1Detect) {
@@ -270,7 +314,11 @@
                         process1 = process1.toLowerCase()
                         process1 = process1.replace('#', 's')
                         const img = document.getElementById('process1note')
+                        img.style.border = '4px solid red'
                         img.src = './figs/' + process1 + '.png'
+                        setTimeout(function () {
+                            img.style.border = '4px solid white'
+                        }, 1000)
                     }
                 }
                 if (process2note) {
@@ -287,6 +335,10 @@
                         process2 = process2.toLowerCase()
                         process2 = process2.replace('#', 's')
                         const img = document.getElementById('process2note')
+                        img.style.border = '4px solid red'
+                        setTimeout(function () {
+                            img.style.border = '4px solid white'
+                        }, 1000)
                         img.src = './figs/' + process2 + '.png'
                     }
                 }
@@ -304,10 +356,28 @@
                         process3 = process3.toLowerCase()
                         process3 = process3.replace('#', 's')
                         const img = document.getElementById('process3note')
+                        img.style.border = '4px solid red'
+                        setTimeout(function () {
+                            img.style.border = '4px solid white'
+                        }, 1000)
+                        img.style.border = '4px solid red'
                         img.src = './figs/' + process3 + '.png'
+                    }
+
+                    if (totalDuration) {
+                        var totalDurationValue = totalDuration.value
+                        if (totalDurationValue != previousTotalDuration) {
+                            previousTotalDuration = totalDurationValue
+                            const img = document.getElementById('duracaoTotal')
+                            updateMeasureBarProgress(
+                                parseInt(totalDurationValue),
+                                'duracaoTotal'
+                            )
+                        }
                     }
                 }
             }
+
             setInterval(updateProcessNote, 15)
         </script>
     </body>
