@@ -1,10 +1,10 @@
 var pdIsInitialized = false;
+window.pd4webGuiValues = {};
 
 function JS_AddUIButtons(audioContext, audioWorkletNode) {
     if (audioContext.state === "running") {
             audioContext.suspend();
         }
-
         // ============================
         const startButton = document.getElementById("Start-Audio-Button");
         startButton.onclick = () => {
@@ -18,10 +18,10 @@ function JS_AddUIButtons(audioContext, audioWorkletNode) {
                     audioContext.resume();
                 }
                 audioWorkletNode.connect(audioContext.destination);
+                audioWorkletNode.connect(audioContext.destination);
                 const Title = document.getElementById("detectedNote");
                 Title.innerHTML = "Ready to play";
                 Title.style.color = "#319231";
-
             } 
             else { // sound is on
                 iconElement.className = "fa-solid fa-volume-xmark fa-2x";
@@ -101,6 +101,17 @@ function JS_LoadFinished() {
     var title = document.getElementById("detectedNote");
     title.innerHTML = "Click on the sound icon to start";
     title.style.color = "#319231";
+}
+
+// ====================
+// ====================
+function JS_setFloat(symbol, value) {
+  window.pd4webGuiValues[symbol] = value;
+}
+
+// ====================
+function JS_setSymbol(symbol, value) {
+  window.pd4webGuiValues[symbol] = value;
 }
 
 // ====================

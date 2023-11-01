@@ -34,20 +34,6 @@
                 padding: 10px;
             }
         </style>
-        <script
-            async
-            src="https://www.googletagmanager.com/gtag/js?id=G-E81RWT6R4V"
-        ></script>
-        <script>
-            navigator.mediaDevices.getUserMedia({ audio: true })
-            window.dataLayer = window.dataLayer || []
-            function gtag() {
-                dataLayer.push(arguments)
-            }
-            gtag('js', new Date())
-            gtag('config', 'G-E81RWT6R4V')
-            const userPreferredLanguage = navigator.language.split('-')[0]
-        </script>
         <script>
             var mainSiteFullscreen = false
             function FullScreen() {
@@ -296,19 +282,19 @@
             var previous3Detect = 0
             var previousTotalDuration = 0
             function updateProcessNote() {
-                const process1note = document.getElementById('ui_process1note')
-                const process2note = document.getElementById('ui_process2note')
-                const process3note = document.getElementById('ui_process3note')
-                const totalDuration = document.getElementById('ui_duracaototal')
+                const process1note = window.pd4webGuiValues['ui_process1note']
+                const process2note = window.pd4webGuiValues['ui_process2note']
+                const process3note = window.pd4webGuiValues['ui_process3note']
+                const totalDuration = window.pd4webGuiValues['ui_duracaototal']
                 if (process1note) {
-                    var process1 = process1note.value
+                    var process1 = process1note
                     if (process1 != previous1Detect) {
                         previous1Detect = process1
-                        const delayTime = document.getElementById(
-                            'ui_process1noteDelay'
-                        )
+                        const delayTime =
+                            window.pd4webGuiValues['ui_process1noteDelay']
+
                         updateMeasureBarProgress(
-                            parseInt(delayTime.value),
+                            parseInt(delayTime),
                             'delayTimeGest1'
                         )
                         process1 = process1.toLowerCase()
@@ -322,14 +308,13 @@
                     }
                 }
                 if (process2note) {
-                    var process2 = process2note.value
+                    var process2 = process2note
                     if (process2 != previous2Detect) {
                         previous2Detect = process2
-                        const delayTime = document.getElementById(
-                            'ui_process2noteDelay'
-                        )
+                        const delayTime =
+                            window.pd4webGuiValues['ui_process2noteDelay']
                         updateMeasureBarProgress(
-                            parseInt(delayTime.value),
+                            parseInt(delayTime),
                             'delayTimeGest2'
                         )
                         process2 = process2.toLowerCase()
@@ -343,12 +328,11 @@
                     }
                 }
                 if (process3note) {
-                    var process3 = process3note.value
+                    var process3 = process3note
                     if (process3 != previous3Detect) {
                         previous3Detect = process3
-                        const delayTime = document.getElementById(
-                            'ui_process3noteDelay'
-                        )
+                        const delayTime =
+                            window.pd4webGuiValues['ui_process3noteDelay']
                         updateMeasureBarProgress(
                             parseInt(delayTime.value),
                             'delayTimeGest3'

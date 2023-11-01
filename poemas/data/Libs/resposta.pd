@@ -1,0 +1,10 @@
+#N canvas 189 205 1752 595 8;
+#X obj 14 7 inlet;
+#X obj 14 36 route go sigmund switch, f 113;
+#X obj 388 53 switch~;
+#X obj 14 270 outlet~;
+#X obj 200 209 clone partial 14;
+#X obj 178 112 print;
+#X connect 0 0 1 0;
+#X connect 1 1 5 0;
+#X connect 1 2 2 0;
