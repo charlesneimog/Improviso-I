@@ -1037,6 +1037,15 @@ function keyPressed() {
         PART_LETTER = 'E'
         sendFloat('pressedkey', 5)
     }
+
+    // ========================
+    if (key === 'W' || key === 'w') {
+        sendFloat('BIG_BUG', 10)
+    }
+
+    if (key === 'Q' || key === 'q') {
+        sendFloat('BIG_BUG', 20)
+    }
 }
 
 function preload() {

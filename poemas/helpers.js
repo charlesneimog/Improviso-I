@@ -33,7 +33,6 @@ function JS_AddUIButtons(audioContext, audioWorkletNode) {
     async function init(stream) {
         if ('setSinkId' in AudioContext.prototype) {
             const devices = await navigator.mediaDevices.enumerateDevices()
-            // const buttom = document.getElementById("Output-Device-Select");
             devices.forEach(function (device) {
                 if (
                     device.kind === 'audiooutput' &&
@@ -42,7 +41,6 @@ function JS_AddUIButtons(audioContext, audioWorkletNode) {
                     var option = document.createElement('option')
                     option.value = device.deviceId
                     option.text = device.label
-                    // buttom.appendChild(option);
                 }
             })
         } else {
@@ -52,16 +50,19 @@ function JS_AddUIButtons(audioContext, audioWorkletNode) {
         }
 
         if ('setSinkId' in AudioContext.prototype) {
-            // const devices = await navigator.mediaDevices.enumerateDevices();
-            // const buttom = document.getElementById("Input-Device-Select");
-            // devices.forEach(function(device) {
-            // if (device.kind === "audioinput" && device.deviceId !== "default") {
-            // var option = document.createElement("option");
-            // option.value = device.deviceId;
-            // option.text = device.label;
-            // buttom.appendChild(option);
-            // }
-            // });
+            const devices = await navigator.mediaDevices.enumerateDevices()
+            // const buttom = document.getElementById('Input-Device-Select')
+            // devices.forEach(function (device) {
+            //     if (
+            //         device.kind === 'audioinput' &&
+            //         device.deviceId !== 'default'
+            //     ) {
+            //         var option = document.createElement('option')
+            //         option.value = device.deviceId
+            //         option.text = device.label
+            //         buttom.appendChild(option)
+            //     }
+            // })
         }
         const mic = audioContext.createMediaStreamSource(stream)
         const clickListenerMic = (_) => {
