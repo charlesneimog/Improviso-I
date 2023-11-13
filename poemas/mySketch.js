@@ -735,8 +735,30 @@ var PART_LETTER = ''
 let changeTextPositionIndex = 0
 let changeTextPosition = 0
 let firstPart_FrameCount = 1
+let tupletSlowValue = 500
+let tupletFastValue = 250
+let gestureValueProbabilty = 0.98
+let clearCanvasProbability = 1
 
-function firstPart() {
+let drawLettersArray = []
+class Letter {
+    constructor(letterString, size, x, y, drawOnset) {
+        this.letterString = letterString
+        this.size = size
+        this.x = x
+        this.y = y
+        this.drawOnset = drawOnset
+    }
+
+    delete() {
+        fill(255)
+        textSize(this.size)
+        text(this.letterString, this.x, this.y)
+    }
+}
+
+function PART_A() {
+    window.pd4webGuiValues['ui_draw'] = 0
     if (x1 < window.innerWidth - 50) {
         x1 = x1 + random(probA_X_posValues[0], probA_X_posValues[1])
         y1 = y1 + random(probA_Y_posValues[0], probA_Y_posValues[1])
@@ -773,36 +795,218 @@ function firstPart() {
         x1 = 100
         y1 = 100
     }
+}
+function PART_B() {
+    window.pd4webGuiValues['ui_draw'] = 0
+    if (x1 < window.innerWidth - 50) {
+        x1 = x1 + random(probA_X_posValues[0], probA_X_posValues[1])
+        y1 = y1 + random(probA_Y_posValues[0], probA_Y_posValues[1])
+    } else {
+        x1 = 50
+        y1 = y1 + 100
+    }
+    fill(0)
+    textSize(random(10, 20))
+    if (nombre < str.length) {
+        let lletra = str.charAt(nombre)
+        if (changeTextPositionIndex === changeTextPosition) {
+            x1 = random(0, window.innerWidth - 10)
+            y1 = random(0, window.innerHeight - 10)
+            lletra = '     '
+            let POEMA = random(POEMAS)
+            str = random(POEMA)[0]
+            changeTextPositionIndex = 0
+            changeTextPosition = parseInt(random(3, 10))
+        }
+        changeTextPositionIndex++
+        text(lletra, x1, y1)
+        nombre++
+    } else {
+        let POEMA = random(POEMAS)
+        str = random(POEMA)[0]
+        nombre = 0
+    }
+    if (x1 > width) {
+        x1 = 100
+        y1 = y1 + 200
+    }
+    if (y1 > height) {
+        x1 = 100
+        y1 = 100
+    }
+}
 
-    let randomTestValue = random(0, 1)
-    if (randomTestValue > 0.99) {
-        background(255)
-
-        randomTestValue = random(0, 1)
-        if (randomTestValue > 0.5) {
-            sendFloat('gestorapido', 1)
-            console.log('gestorapido')
+function PART_C() {
+    window.pd4webGuiValues['ui_draw'] = 0
+    let timeNow = millis()
+    for (let i = 0; i < drawLettersArray.length; i++) {
+        let letter = drawLettersArray[i]
+        if (timeNow - letter.drawOnset > random(5000, 7000)) {
+            letter.delete()
+            drawLettersArray.splice(i, 1)
         }
     }
-    if (globalFrameCount % firstPart_FrameCount === 0) {
-        firstPart_FrameCount += parseInt(firstPart_FrameCount * 1.4)
-        globalFrameCount = 1
-        randomTestValue = random(0, 1)
-        if (randomTestValue > 0.5) {
-            sendFloat('gestorapido', 1)
-            console.log('gestorapido')
+    if (y1 > height - 1) {
+        // background(255)
+        y1 = 20
+    }
+
+    if (x1 < window.innerWidth - 1) {
+        x1 = x1 + random(15, 30)
+    } else {
+        x1 = 20
+        y1 = y1 + random(20, 30)
+    }
+    fill(random(0, 255))
+    let textsize = random(13, 15)
+    textSize(textsize)
+    if (nombre < str.length) {
+        let randomValue = random(10, 20)
+        let lletra = str.charAt(nombre)
+        changeTextPositionIndex++
+        text(lletra, x1, y1 + randomValue)
+        nombre++
+        drawLettersArray.push(
+            new Letter(lletra, textsize, x1, y1 + randomValue, timeNow)
+        )
+    } else {
+        let POEMA = random(POEMAS)
+        str = random(POEMA)[0]
+        nombre = 0
+    }
+
+    let showScore = window.pd4webGuiValues['ui_showScore']
+    if (showScore === 1) {
+        window.pd4webGuiValues['ui_showScore'] = 0
+        let notename = window.pd4webGuiValues['ui_process1note']
+        console.log(notename)
+        let img = document.createElement('img')
+        let note = random(Object.keys(allNotes))
+        img.setAttribute('src', note)
+        img.style.position = 'absolute'
+        img.style.left = random(20, window.innerWidth - 100) + 'px'
+        img.style.top = random(20, window.innerHeight - 100) + 'px'
+        img.style.width = '100px'
+        img.style.height = '100px'
+        // add simple shadow
+        // img.style.boxShadow = '0px 0px 5px 1px rgba(0,0,0,0.75)'
+        img.style.borderRadius = '50%'
+        document.body.appendChild(img)
+        setTimeout(() => {
+            document.body.removeChild(img)
+        }, 4000)
+    }
+}
+
+function PART_D() {
+    window.pd4webGuiValues['ui_draw'] = 0
+    let timeNow = millis()
+    for (let i = 0; i < drawLettersArray.length; i++) {
+        let letter = drawLettersArray[i]
+        if (timeNow - letter.drawOnset > random(5000, 7000)) {
+            letter.delete()
+            drawLettersArray.splice(i, 1)
         }
-        // console.log('gestorapido')
+    }
+    if (y1 > height - 1) {
+        y1 = 20
+    }
+
+    if (x1 < window.innerWidth - 1) {
+        x1 = x1 + random(15, 30)
+    } else {
+        x1 = 20
+        y1 = y1 + random(20, 30)
+    }
+
+    let randomValueForLetter = window.pd4webGuiValues['ui_randomlettercolor']
+    fill(random(randomValueForLetter, 255))
+    let textsize = random(13, 15)
+    textSize(textsize)
+    if (nombre < str.length) {
+        let randomValue = random(10, 20)
+        let lletra = str.charAt(nombre)
+        changeTextPositionIndex++
+        text(lletra, x1, y1 + randomValue)
+        nombre++
+        drawLettersArray.push(
+            new Letter(lletra, textsize, x1, y1 + randomValue, timeNow)
+        )
+    } else {
+        let POEMA = random(POEMAS)
+        str = random(POEMA)[0]
+        nombre = 0
+    }
+
+    let randomWhiteForm = window.pd4webGuiValues['ui_randomform']
+    // console.log('randomWhiteForm', randomWhiteForm)
+    if (randomWhiteForm === 1) {
+        window.pd4webGuiValues['ui_randomform'] = 0
+        let randomWidth = random(50, 200)
+        let randomHeight = random(50, 200)
+        let randomX = random(0, window.innerWidth - randomWidth)
+        let randomY = random(0, window.innerHeight - randomHeight)
+        fill(255)
+        noStroke()
+        rect(randomX, randomY, randomWidth, randomHeight)
+    }
+}
+
+function PART_E() {
+    window.pd4webGuiValues['ui_draw'] = 0
+    let timeNow = millis()
+    for (let i = 0; i < drawLettersArray.length; i++) {
+        let letter = drawLettersArray[i]
+        if (timeNow - letter.drawOnset > random(5000, 7000)) {
+            letter.delete()
+            drawLettersArray.splice(i, 1)
+        }
+    }
+    if (y1 > height - 1) {
+        y1 = 20
+    }
+
+    if (x1 < window.innerWidth - 1) {
+        x1 = x1 + random(15, 30)
+    } else {
+        x1 = 20
+        y1 = y1 + random(20, 30)
+    }
+
+    let randomWhiteForm = window.pd4webGuiValues['ui_randomform']
+    let backgroundFinishColour = window.pd4webGuiValues['ui_backgroundfinish']
+    if (randomWhiteForm === 1 && backgroundFinishColour !== 255) {
+        window.pd4webGuiValues['ui_randomform'] = 0
+        let randomWidth = random(50, 500)
+        let randomHeight = random(50, 500)
+        let randomX = random(0, window.innerWidth - randomWidth)
+        let randomY = random(0, window.innerHeight - randomHeight)
+        fill(255)
+        noStroke()
+        rect(randomX, randomY, randomWidth, randomHeight)
+    }
+
+    if (backgroundFinishColour !== 255) {
         background(255)
-        probA_ClearCanvas += probA_ClearCanvas * 0.02
-        probA_X_posValues = [
-            probA_X_posValues[0] * 0.99999,
-            probA_X_posValues[1] * 0.999999,
-        ]
-        probA_Y_posValues = [
-            probA_Y_posValues[0] * 0.99999,
-            probA_Y_posValues[1] * 0.999999,
-        ]
+        return
+    }
+    let randomValueForLetter = window.pd4webGuiValues['ui_randomlettercolor']
+    fill(random(randomValueForLetter, 255))
+    let textsize = random(13, 15)
+    textSize(textsize)
+    if (nombre < str.length) {
+        let randomValue = random(10, 20)
+        let lletra = str.charAt(nombre)
+        changeTextPositionIndex++
+        text(lletra, x1, y1 + randomValue)
+        nombre++
+        drawLettersArray.push(
+            new Letter(lletra, textsize, x1, y1 + randomValue, timeNow)
+        )
+    } else {
+        let POEMA = random(POEMAS)
+        str = random(POEMA)[0]
+        nombre = 0
     }
 }
 
@@ -811,171 +1015,27 @@ let probA_X_posValues = [15, 20]
 let probA_Y_posValues = [-5, 5]
 // frameCountValue = 0
 
-function partA() {
-    if (x1 < window.innerWidth - 50) {
-        x1 = x1 + random(probA_X_posValues[0], probA_X_posValues[1])
-        y1 = y1 + random(probA_Y_posValues[0], probA_Y_posValues[1])
-    } else {
-        x1 = 100
-        y1 = y1 + 200
-    }
-    fill(0)
-    textSize(random(10, 20))
-    if (nombre < str.length) {
-        let lletra = str.charAt(nombre)
-        if (lletra === ' ') {
-            x1 = random(0, window.innerWidth - 10)
-            y1 = random(0, window.innerHeight - 10)
-            lletra = '     '
-            let POEMA = random(POEMAS)
-            str = random(POEMA)[0]
-        }
-        text(lletra, x1, y1)
-        nombre++
-    } else {
-        let POEMA = random(POEMAS)
-        str = random(POEMA)[0]
-        nombre = 0
-    }
-    if (x1 > width) {
-        x1 = 100
-        y1 = y1 + 200
-    }
-    if (y1 > height) {
-        x1 = 100
-        y1 = 100
-    }
-    let randomNote = random(0, 1000) * 0.001
-    if (randomNote > probA_ClearCanvas && frameCount % frameCountValue === 0) {
-        frameCountValue += 10
-        if (probA_ClearCanvas > 0.99) {
-            probA_ClearCanvas -= probA_ClearCanvas * 0.01
-        } else {
-            background(255)
-            probA_ClearCanvas += probA_ClearCanvas * 0.01
-            probA_X_posValues = [
-                probA_X_posValues[0] * 0.99999,
-                probA_X_posValues[1] * 0.999999,
-            ]
-            probA_Y_posValues = [
-                probA_Y_posValues[0] * 0.99999,
-                probA_Y_posValues[1] * 0.999999,
-            ]
-        }
-    }
-
-    randomNote = random(0, 1000) * 0.001
-    if (randomNote > 0.98) {
-        let x1_img = random(0, window.innerWidth - 100)
-        let y1_img = random(0, window.innerHeight - 100)
-        var div = document.createElement('div', 'image-container')
-        div.style.position = 'absolute'
-        div.style.left = x1_img + 'px'
-        div.style.top = y1_img + 'px'
-        let imgSizeRandom = random(50, 150)
-        div.style.width = imgSizeRandom + 'px'
-        div.style.height = imgSizeRandom + 'px'
-        div.style.background = 'white'
-        div.style.zIndex = 1000
-        div.style.pointerEvents = 'none'
-        div.style.borderRadius = '10px'
-        let randomValueOfProcess = random([0, 1])
-        let shadowColor = [
-            '0px 0px 1px 1px rgba(0,0,0,0.05)',
-            '0px 0px 3px 3px rgba(0,0,0,0.25)',
-        ][randomValueOfProcess]
-        div.style.boxShadow = shadowColor
-        let img = document.createElement('img')
-        let process1 = window.pd4webGuiValues['ui_process1note']
-        let process2 = window.pd4webGuiValues['ui_process2note']
-        let processNote = [process1, process2][randomValueOfProcess]
-        processNote = processNote.toLowerCase()
-        processNote = processNote.replace('#', 's')
-        img.src = './figs/' + processNote + '.png'
-        img.id = 'your-image'
-        img.style.width = '100%'
-        img.style.height = '100%'
-        img.style.objectFit = 'cover'
-        img.style.borderRadius = '10px'
-        img.style.clipPath = 'inset(3px 3px 3px 3px)'
-        div.appendChild(img)
-        document.body.appendChild(div)
-        setTimeout(function () {
-            div.classList.add('fade-in')
-        }, 1000)
-        setTimeout(
-            () => {
-                div.remove()
-            },
-            random(1500, 4000)
-        )
-    }
-}
-
-function partB() {
-    background(255)
-    PART_LETTER = 'B'
-}
-
-function partC() {
-    if (x1 < window.innerWidth - 100) {
-        x1 = x1 + random(15, 20)
-        y1 = y1 + random(-5, 5)
-    } else {
-        x1 = 100
-        y1 = y1 + 200
-    }
-    fill(0)
-    textSize(random(10, 20))
-    if (nombre < str.length) {
-        let lletra = str.charAt(nombre)
-        if (lletra === ' ') {
-            lletra = '     '
-            let POEMA = random(POEMAS)
-            str = random(POEMA)[0]
-        }
-        text(lletra, x1, y1)
-        nombre++
-    } else {
-        let POEMA = random(POEMAS)
-        str = random(POEMA)[0]
-        nombre = 0
-    }
-
-    if (x1 > width) {
-        x1 = 100
-        y1 = y1 + 200
-    }
-    if (y1 > height) {
-        x1 = 100
-        y1 = 100
-    }
-
-    let randomNote = random(0, 1000) * 0.001
-    if (randomNote > 0.99) {
-        let note =
-            allNotes[
-                Object.keys(allNotes)[
-                    parseInt(random(0, Object.keys(allNotes).length))
-                ]
-            ]
-        let noteWidth = note.width
-        let noteHeight = note.height
-        image(note, x1 % noteWidth, y1 % noteHeight, 300, 300)
-        setTimeout(removeImage, 4000, x1 % noteWidth, y1 % noteHeight)
-    }
-}
-
 function keyPressed() {
     if (key === 'A' || key === 'a') {
         PART_LETTER = 'A'
-        notaParaGesto = 1
-        // sendFloat('pressedkey', 1);
+        sendFloat('pressedkey', 1)
     }
     if (key === 'B' || key === 'b') {
         PART_LETTER = 'B'
-        notaParaGesto = 0.99
-        // sendFloat('pressedkey', 2);
+        sendFloat('pressedkey', 2)
+    }
+    if (key === 'C' || key === 'c') {
+        PART_LETTER = 'C'
+        sendFloat('pressedkey', 3)
+        // background(255)
+    }
+    if (key === 'D' || key === 'd') {
+        PART_LETTER = 'D'
+        sendFloat('pressedkey', 4)
+    }
+    if (key === 'E' || key === 'e') {
+        PART_LETTER = 'E'
+        sendFloat('pressedkey', 5)
     }
 }
 
@@ -1039,18 +1099,23 @@ function setup() {
 }
 
 function draw() {
-    let thisFrameMod = frameCount % drawFrameCount
-    if (thisFrameMod == 0) {
-        drawFrameCount = parseInt(random(5, 10))
-        globalFrameCount++
-    } else {
-        return
+    let clearcanvas = window.pd4webGuiValues['ui_p5js_clearcanvas']
+    if (clearcanvas === 1) {
+        background(255)
+        window.pd4webGuiValues['ui_p5js_clearcanvas'] = 0
     }
-    if (PART_LETTER === 'A') {
-        partA()
-        // firstPart()
-    }
-    if (PART_LETTER === 'B') {
-        partB()
+    let fpsPureData = window.pd4webGuiValues['ui_draw']
+    if (fpsPureData === 1) {
+        if (PART_LETTER === 'A') {
+            PART_A()
+        } else if (PART_LETTER === 'B') {
+            PART_B()
+        } else if (PART_LETTER === 'C') {
+            PART_C()
+        } else if (PART_LETTER === 'D') {
+            PART_D()
+        } else if (PART_LETTER === 'E') {
+            PART_E()
+        }
     }
 }

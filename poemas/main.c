@@ -19,22 +19,26 @@
 #include <emscripten/webaudio.h> /* WebAudio API  */
 #include <z_libpd.h>             /* libpd */
 
+void routetype_setup(void);
 void lb_setup(void);
-void loadbanger_setup(void);
 void prepend_setup(void);
 void gate_setup(void);
 void envgen_tilde_setup(void);
-void marimba_tilde_setup(void);
-void bowedbar_tilde_setup(void);
-void loop_setup(void);
 void blocksize_tilde_setup(void);
 void message_setup(void);
 void rint_setup(void);
 void format_setup(void);
 void selector_setup(void);
 void floor_setup(void);
-void args_setup(void);
 void router_setup(void);
+void wrap2_setup(void);
+void args_setup(void);
+void loadbanger_setup(void);
+void slice_setup(void);
+void click_tilde_setup(void);
+void sig2float_tilde_setup(void);
+void loop_setup(void);
+void xgate_tilde_setup(void);
 void vu_tilde_setup(void);
 void earplug_tilde_setup(void);
 void grainer_tilde_setup(void);
@@ -51,8 +55,8 @@ int samplerate = 48000;
 // ================ GUI ================
 pthread_mutex_t WriteReadMutex = PTHREAD_MUTEX_INITIALIZER;
 
-char* HTML_IDS[] = {"ui_process1note", "ui_process2note", "ui_process2noteDelay", "ui_process2noteDelay", "ui_duracaototal"};
-int HTML_IDS_SIZE = 5;
+char* HTML_IDS[] = {"ui_process1note", "ui_p5js_clearcanvas", "ui_draw", "ui_p5js_clearcanvas", "ui_draw", "ui_p5js_clearcanvas", "ui_draw", "ui_showScore", "ui_notename", "ui_draw", "ui_randomform", "ui_randomlettercolor", "ui_showScore", "ui_notename", "ui_draw", "ui_showScore", "ui_notename", "ui_randomform", "ui_randomlettercolor", "ui_clearallcanvas", "ui_backgroundfinish"};
+int HTML_IDS_SIZE = 21;
 
 typedef struct pdItem {
   const char *receiverID;
@@ -72,7 +76,7 @@ typedef struct pdItemHash {
 } pdItemHash;
 
 struct pdItemHash *receiverHash;
-int pdWebValueArraySize = 32;
+int pdWebValueArraySize = 128;
 /* IF THERE IS MORE THAN 32 VALUES, INCREASE THIS
                               VALUE TODO: Add this on pd2wasm */
 
@@ -325,22 +329,26 @@ void AudioWorkletProcessorCreated(EMSCRIPTEN_WEBAUDIO_T audioContext,
   libpd_set_printhook(pdprint);
   libpd_init();
 
+  routetype_setup();
   lb_setup();
-  loadbanger_setup();
   prepend_setup();
   gate_setup();
   envgen_tilde_setup();
-  marimba_tilde_setup();
-  bowedbar_tilde_setup();
-  loop_setup();
   blocksize_tilde_setup();
   message_setup();
   rint_setup();
   format_setup();
   selector_setup();
   floor_setup();
-  args_setup();
   router_setup();
+  wrap2_setup();
+  args_setup();
+  loadbanger_setup();
+  slice_setup();
+  click_tilde_setup();
+  sig2float_tilde_setup();
+  loop_setup();
+  xgate_tilde_setup();
   vu_tilde_setup();
   earplug_tilde_setup();
   grainer_tilde_setup();

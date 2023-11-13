@@ -1,368 +1,97 @@
 <!doctype html>
-<html lang="en-US">
-    <head>
-        <link
-            preload
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-        />
-        <script defer src="./enable-threads.js"></script>
-        <meta charset="utf-8" />
-        <title>Piece Test</title>
-        <style>
-            .icon-container {
-                display: flex;
-                align-items: center;
-                height: 30px;
-                padding: 10px;
-            }
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>pd4web Template html</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="" />
+    <meta property="og:title" content="" />
+    <meta property="og:image" content="" />
+    <meta property="og:url" content="" />
+    <meta property="og:site_name" content="" />
+    <meta property="og:description" content="" />
+    <meta name="twitter:title" content="" />
+    <meta name="twitter:image" content="" />
+    <meta name="twitter:url" content="" />
+    <meta name="twitter:card" content="" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <script src="./enable-threads.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css?family=Karla:400,700"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <style>
+      body {
+        font-family: "Karla", Arial, sans-serif;
+        line-height: 1.8;
+        font-size: 16px;
+        font-weight: 400;
+        background: #fafafa;
+        color: gray;
+      }
 
-            .custom-icon {
-                color: #000000;
-                cursor: pointer;
-                padding: 40px;
-            }
-            .flex-container {
-                display: flex;
-                justify-content: center;
-            }
-            .flex-item {
-                flex: 1;
-                text-align: center;
-                border-radius: 10px;
-                margin: 10px;
-                padding: 10px;
-            }
-        </style>
-        <script>
-            var mainSiteFullscreen = false
-            function FullScreen() {
-                var element = document.documentElement // You can replace this with the specific element you want to make full screen
-                if (mainSiteFullscreen === false) {
-                    if (element.requestFullscreen) {
-                        element.requestFullscreen()
-                        mainSiteFullscreen = true
-                    } else if (element.mozRequestFullScreen) {
-                        // Firefox
-                        element.mozRequestFullScreen()
-                        mainSiteFullscreen = true
-                    } else if (element.webkitRequestFullscreen) {
-                        // Chrome, Safari and Opera
-                        element.webkitRequestFullscreen()
-                        mainSiteFullscreen = true
-                    } else if (element.msRequestFullscreen) {
-                        // IE/Edge
-                        element.msRequestFullscreen()
-                        mainSiteFullscreen = true
-                    }
-                    var gotoFullScreen =
-                        document.getElementById('gotoFullScreen')
-                    gotoFullScreen.innerText = 'Exit Fullscreen'
-                } else {
-                    if (document.exitFullscreen) {
-                        document.exitFullscreen()
-                        mainSiteFullscreen = false
-                    } else if (document.mozCancelFullScreen) {
-                        // Firefox
-                        document.mozCancelFullScreen()
-                        mainSiteFullscreen = false
-                    } else if (document.webkitExitFullscreen) {
-                        // Chrome, Safari and Opera
-                        document.webkitExitFullscreen()
-                        mainSiteFullscreen = false
-                    } else if (document.msExitFullscreen) {
-                        // IE/Edge
-                        document.msExitFullscreen()
-                        mainSiteFullscreen = false
-                    }
-                    var gotoFullScreen =
-                        document.getElementById('gotoFullScreen')
-                    gotoFullScreen.innerText = 'Go to Fullscreen'
-                }
-            }
-        </script>
+      #footer {
+        position: fixed;
+        bottom: 0;
+        width: 80%;
+        height: 60px; /* Height of the footer */
+      }
+    </style>
+  </head>
+  <body
+    style="background-color: #f0f0f0; margin-left: 10%; margin-right: 10%"
+    ;
+  >
+    <div id="page-container">
+      <div style="display: flex; align-items: center; justify-content: center">
+        <a id="Start-Audio-Button">
+          <i
+            id="SoundIcon"
+            class="fa-solid fa-spinner fa-spin-pulse fa-2x custom-icon"
+          ></i>
+        </a>
 
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    </head>
-    <body>
-        <div id="scriptContainer"></div>
-        <div class="flex-container">
-            <div class="flex-item">
-                <div
-                    class="icon-container"
-                    style="display: flex; margin-left: calc(33% - 10px)"
-                >
-                    <a id="Start-Audio-Button">
-                        <i
-                            id="SoundIcon"
-                            class="fa-solid fa-spinner fa-spin-pulse fa-2x custom-icon"
-                        ></i>
-                    </a>
-                    <a>
-                        <i
-                            class="fa-solid fa-expand custom-icon fa-xl"
-                            onclick="FullScreen()"
-                        ></i>
-                    </a>
-                </div>
-
-                <div style="display: flex; align-items: center">
-                    <select
-                        id="Input-Device-Select"
-                        style="text-align: center; display: none"
-                    >
-                        <option value="default">Default</option>
-                    </select>
-                </div>
-                <div style="display: flex; align-items: center">
-                    <select
-                        id="Output-Device-Select"
-                        style="text-align: center; display: none"
-                    >
-                        <option value="default">Default</option>
-                    </select>
-                </div>
-            </div>
-            <br />
-            <div class="flex-item">
-                <select
-                    id="Instrument-Select"
-                    style="
-                        text-align: center;
-                        font-size: 30px;
-                        border-radius: 5px;
-                    "
-                    onchange="changeInstrument()"
-                >
-                    <option value="Violino">Violino</option>
-                    <option value="Guitar">Violão</option>
-                </select>
-                <br />
-                <input
-                    type="range"
-                    min="-20"
-                    max="10"
-                    value="-10"
-                    class="slider"
-                    id="followerGain"
-                    onchange="changeVolume()"
-                />
-            </div>
-            <br />
-            <div class="flex-item">
-                <h1 style="text-align: center; color: red" id="detectedNote">
-                    Downloading Files, wait!
-                </h1>
-            </div>
+        <div style="display: flex; align-items: center">
+          <select
+            id="Input-Device-Select"
+            style="text-align: center; display: none"
+          >
+            <option value="default">Default</option>
+          </select>
         </div>
-        <script async src="libpd.js"></script>
-        <script src="helpers.js"></script>
-        <hr
-            style="width: 75%; margin-left: 10%; margin-right: 10%; color: grey"
-        />
-        <br />
-        <div style="display: flex">
-            <div>
-                <h3 id="process1" style="text-align: center">Granulador</h3>
-                <img
-                    id="process1note"
-                    src="./figs/c4.png"
-                    alt="Piece Logo"
-                    style="
-                        width: 90%;
-                        margin-left: 10px;
-                        border: 4px solid white;
-                    "
-                />
-                <div
-                    id="delayTimeGest1"
-                    style="
-                        width: 90%;
-                        border-radius: 5px;
-                        height: 10px;
-                        margin-left: 10px;
-                        background-color: red;
-                    "
-                ></div>
-            </div>
-            <div>
-                <h3 id="process2" style="text-align: center">Espectro</h3>
-                <img
-                    id="process2note"
-                    src="./figs/gs4.png"
-                    alt="Piece Logo"
-                    style="
-                        width: 90%;
-                        margin-left: 10px;
-                        border: 4px solid white;
-                    "
-                />
-                <div
-                    id="delayTimeGest2"
-                    style="
-                        width: 90%;
-                        border-radius: 5px;
-                        height: 10px;
-                        margin-left: 10px;
-                        background-color: red;
-                    "
-                ></div>
-            </div>
-            <div>
-                <h3 id="process3" style="text-align: center">Gestos</h3>
-                <img
-                    id="process3note"
-                    src="./figs/c5.png"
-                    alt="Piece Logo"
-                    style="
-                        width: 90%;
-                        margin-left: 10px;
-                        border: 4px solid white;
-                    "
-                />
-                <div
-                    id="delayTimeGest3"
-                    style="
-                        width: 90%;
-                        border-radius: 5px;
-                        height: 10px;
-                        margin-left: 10px;
-                        background-color: red;
-                    "
-                ></div>
-            </div>
+        <div style="display: flex; align-items: center">
+          <select
+            id="Output-Device-Select"
+            style="text-align: center; display: none"
+          >
+            <option value="default">Default</option>
+          </select>
         </div>
-        <div
-            id="duracaoTotal"
-            style="
-                width: (calc(100% - 20px));
-                margin-top: 40px;
-                border-radius: 5px;
-                height: 20px;
-                margin-right: 10px;
-                margin-left: 10px;
-                background-color: black;
-            "
-        ></div>
+      </div>
+    </div>
 
-        <script>
-            var noteNumber = 0
-            var noteSymbol = ''
-            var previousGest = 0
-            var lastDurationToChangeScore = 0
-
-            function changeInstrument() {
-                const value = document.getElementById('Instrument-Select').value
-                console.log(value)
-                sendString('pieceInstrument', value)
-            }
-
-            function changeVolume() {
-                const value = document.getElementById('followerGain').value
-                sendFloat('followerGain', parseFloat(value))
-            }
-
-            function updateMeasureBarProgress(duration, id) {
-                var start = new Date().getTime()
-                var interval = setInterval(function () {
-                    var now = new Date().getTime()
-                    var progress = now - start
-                    var div = document.getElementById(id)
-                    var div_width = Math.min((progress / duration) * 100, 100)
-                    measureDivWidth = div_width
-                    div.style.width = div_width * 0.9 + '%'
-                    if (div_width > 89.9) {
-                        clearInterval(interval)
-                        div.style.width = 90 + '%'
-                    }
-                }, 15)
-            }
-            var previous1Detect = 0
-            var previous2Detect = 0
-            var previous3Detect = 0
-            var previousTotalDuration = 0
-            function updateProcessNote() {
-                const process1note = window.pd4webGuiValues['ui_process1note']
-                const process2note = window.pd4webGuiValues['ui_process2note']
-                const process3note = window.pd4webGuiValues['ui_process3note']
-                const totalDuration = window.pd4webGuiValues['ui_duracaototal']
-                if (process1note) {
-                    var process1 = process1note
-                    if (process1 != previous1Detect) {
-                        previous1Detect = process1
-                        const delayTime =
-                            window.pd4webGuiValues['ui_process1noteDelay']
-
-                        updateMeasureBarProgress(
-                            parseInt(delayTime),
-                            'delayTimeGest1'
-                        )
-                        process1 = process1.toLowerCase()
-                        process1 = process1.replace('#', 's')
-                        const img = document.getElementById('process1note')
-                        img.style.border = '4px solid red'
-                        img.src = './figs/' + process1 + '.png'
-                        setTimeout(function () {
-                            img.style.border = '4px solid white'
-                        }, 1000)
-                    }
-                }
-                if (process2note) {
-                    var process2 = process2note
-                    if (process2 != previous2Detect) {
-                        previous2Detect = process2
-                        const delayTime =
-                            window.pd4webGuiValues['ui_process2noteDelay']
-                        updateMeasureBarProgress(
-                            parseInt(delayTime),
-                            'delayTimeGest2'
-                        )
-                        process2 = process2.toLowerCase()
-                        process2 = process2.replace('#', 's')
-                        const img = document.getElementById('process2note')
-                        img.style.border = '4px solid red'
-                        setTimeout(function () {
-                            img.style.border = '4px solid white'
-                        }, 1000)
-                        img.src = './figs/' + process2 + '.png'
-                    }
-                }
-                if (process3note) {
-                    var process3 = process3note
-                    if (process3 != previous3Detect) {
-                        previous3Detect = process3
-                        const delayTime =
-                            window.pd4webGuiValues['ui_process3noteDelay']
-                        updateMeasureBarProgress(
-                            parseInt(delayTime.value),
-                            'delayTimeGest3'
-                        )
-                        process3 = process3.toLowerCase()
-                        process3 = process3.replace('#', 's')
-                        const img = document.getElementById('process3note')
-                        img.style.border = '4px solid red'
-                        setTimeout(function () {
-                            img.style.border = '4px solid white'
-                        }, 1000)
-                        img.style.border = '4px solid red'
-                        img.src = './figs/' + process3 + '.png'
-                    }
-                }
-
-                if (totalDuration) {
-                    var totalDurationValue = totalDuration.value
-                    if (totalDurationValue != previousTotalDuration) {
-                        previousTotalDuration = totalDurationValue
-                        const img = document.getElementById('duracaoTotal')
-                        updateMeasureBarProgress(
-                            parseInt(totalDurationValue),
-                            'duracaoTotal'
-                        )
-                    }
-                }
-            }
-
-            setInterval(updateProcessNote, 15)
-        </script>
-    </body>
+    <script src="./helpers.js"></script>
+    <script src="./libpd.js"></script>
+  </body>
+  <br />
+  <div style="display: flex; align-items: center; justify-content: center">
+    <svg
+      id="pdPatch"
+      viewBox="0 0 150 150"
+      preserveAspectRatio="xMidYMin meet"
+      style="border: 0px solid black; border-radius: 5px"
+    ></svg>
+  </div>
+  <script src="./patchDraw.js"></script>
 </html>
