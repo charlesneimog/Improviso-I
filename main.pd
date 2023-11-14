@@ -1,4 +1,4 @@
-#N canvas 320 3 1602 671 8;
+#N canvas 320 32 1602 671 8;
 #X obj 13 91 adc~ 1;
 #N canvas 495 32 1206 947 pitch 0;
 #X obj 4 168 float;
@@ -99,7 +99,7 @@
 #X connect 11 0 4 0;
 #X connect 11 1 6 0;
 #X restore 9 239 pd TEXTURA;
-#N canvas 607 32 601 560 GRANULADOR 1;
+#N canvas 607 32 601 560 GRANULADOR 0;
 #X text 115 189 TEXTURAS;
 #N canvas 343 32 1171 971 GRANULADOR 0;
 #X obj 4 4 adc~ 1;
@@ -1290,7 +1290,7 @@
 #X connect 25 0 2 0;
 #X restore 4 4 pd POEMAS-RECITAS;
 #X obj 580 139 sel 1 2 3 4 5, f 33;
-#N canvas 558 79 1055 848 E 0;
+#N canvas 558 79 1055 848 E 1;
 #X obj 12 10 inlet;
 #N canvas 249 26 1339 859 CANVAS 0;
 #X msg 15 191 1;
@@ -1432,7 +1432,7 @@
 #X connect 27 0 26 0;
 #X restore 12 165 pd RECITAR;
 #X obj 136 267 vline~;
-#N canvas 108 32 1611 804 GESTURES 0;
+#N canvas 108 32 1611 804 GESTURES 1;
 #X obj 2 2 inlet;
 #X msg 2 116 1;
 #X obj 54 74 line;
@@ -1483,7 +1483,6 @@
 #X connect 7 0 19 1;
 #X connect 8 0 7 0;
 #X connect 10 0 14 0;
-#X connect 13 0 9 0;
 #X connect 14 0 11 0;
 #X connect 15 0 32 0;
 #X connect 17 0 16 0;
