@@ -1018,24 +1018,23 @@ let probA_Y_posValues = [-5, 5]
 function keyPressed() {
     if (key === 'A' || key === 'a') {
         PART_LETTER = 'A'
-        sendFloat('pressedkey', 1)
+        sendToPureData('pressedkey', 1)
     }
     if (key === 'B' || key === 'b') {
         PART_LETTER = 'B'
-        sendFloat('pressedkey', 2)
+        sendToPureData('pressedkey', 2)
     }
     if (key === 'C' || key === 'c') {
         PART_LETTER = 'C'
-        sendFloat('pressedkey', 3)
-        // background(255)
+        sendToPureData('pressedkey', 3)
     }
     if (key === 'D' || key === 'd') {
         PART_LETTER = 'D'
-        sendFloat('pressedkey', 4)
+        sendToPureData('pressedkey', 4)
     }
     if (key === 'E' || key === 'e') {
         PART_LETTER = 'E'
-        sendFloat('pressedkey', 5)
+        sendToPureData('pressedkey', 5)
     }
 
     // ========================
